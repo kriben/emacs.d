@@ -42,9 +42,6 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 
-;; tetris score file
-(setq tetris-score-file (expand-file-name "tetris" user-emacs-directory))
-
 ;; automatically determine major-mode for newly created buffers
 (setq-default major-mode
               (lambda ()
