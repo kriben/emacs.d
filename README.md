@@ -1,16 +1,15 @@
 # .emacs.d
 
-My personal Emacs settings with inspiration from:
+My personal Emacs settings.
 
-* [magnars/.emacs.d](https://github.com/magnars/.emacs.d)
-* [purcell/emacs.d](https://github.com/purcell/emacs.d)
-* [technomancy/better-defaults](https://github.com/technomancy/better-defaults)
+Fork of the Martin Polden's great config:
+* [martinp/.emacs.d](https://github.com/martinp/.emacs.d)
 
 ## Setup
 
 Clone the repository:
 
-`git clone https://github.com/martinp/.emacs.d dot.emacs.d`
+`git clone https://github.com/kriben/.emacs.d dot.emacs.d`
 
 Install symlink in `~/.emacs.d`:
 
