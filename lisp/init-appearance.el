@@ -43,4 +43,7 @@
 ;; display current function in mode-line
 (which-function-mode 1)
 
+;; show current file path in frame title
+(setq frame-title-format '("%f" (dired-directory "%b")))
+
 (provide 'init-appearance)
