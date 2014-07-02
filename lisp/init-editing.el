@@ -40,6 +40,9 @@
 ;; use zap-up-to-char instead of zap-to-char
 (global-set-key (kbd "M-z") 'zap-up-to-char)
 
+;; short-cut for goto-line
+(global-set-key (kbd "C-l") 'goto-line)
+
 ;; open line below or above current line
 (defun open-line-below ()
   (interactive)
