@@ -31,3 +31,19 @@ tutorial/
 
 # backup files
 backups/
+
+# local settings
+/lisp/init-local.el
+
+# projectile
+/projectile-bookmarks.eld
+/projectile.cache
+
+# eww
+/url/
+
+# recentf
+/recentf
+
+# multiple-cursors
+/.mc-lists.el

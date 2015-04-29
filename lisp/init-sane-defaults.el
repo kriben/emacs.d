@@ -45,10 +45,9 @@
 ;; automatically determine major-mode for newly created buffers
 (setq-default major-mode
               (lambda ()
-                ;; try buffer-file-name first  (will be nil for unsaved buffers)
-                ;; and fall back to buffer-name
-                (let ((buffer-file-name (or buffer-file-name (buffer-name))))
-                  (set-auto-mode))))
+                (unless buffer-file-name
+                  (let ((buffer-file-name (buffer-name)))
+                    (set-auto-mode t)))))
 
 ;; show human readable sizes in dired
 (setq dired-listing-switches "-alh")
@@ -61,5 +60,8 @@
 
 ;; undo/redo window configuration with C-c <left>/<right>
 (winner-mode 1)
+
+;; confirm when exiting
+(setq confirm-kill-emacs 'y-or-n-p)
 
 (provide 'init-sane-defaults)

@@ -1,20 +1,15 @@
 ;; install packages
-(require-packages '(move-text whole-line-or-region))
+(require-package 'whole-line-or-region)
 
-(require 'move-text)
 (require 'whole-line-or-region)
 (require 'misc)
 (require 'whitespace)
-(require 'imenu)
 
 ;; disable backup files
 (setq make-backup-files nil)
 
 ;; preserve point position when scrolling
 (setq scroll-preserve-screen-position 'always)
-
-;; make imenu automatically rescan buffers
-(setq imenu-auto-rescan t)
 
 ;; enable electric-indent-mode
 (electric-indent-mode 1)
@@ -24,18 +19,8 @@
              '("z\\(sh[^/]*\\|login\\|logout\\|profile\\|preztorc\\)\\'"
                . sh-mode))
 
-;; use conf-mode for Procfile
-(add-to-list 'auto-mode-alist '("/Procfile\\'" . conf-mode))
-
 ;; cut or copy the currrent line if no region is active
 (whole-line-or-region-mode 1)
-
-;; bind keys for moving lines up and down
-(global-set-key (kbd "M-<up>") 'move-text-up)
-(global-set-key (kbd "M-<down>") 'move-text-down)
-
-;; undo
-(global-set-key (kbd "C-u") 'undo)
 
 ;; use zap-up-to-char instead of zap-to-char
 (global-set-key (kbd "M-z") 'zap-up-to-char)
@@ -67,17 +52,6 @@
 ;; C-x k kills current buffer
 (global-set-key (kbd "C-x k") 'kill-this-buffer)
 
-;; C-c r reverts buffer without confirmation
-(defun revert-buffer-without-query ()
-  "Revert the current buffer without confirmation."
-  (interactive)
-  (revert-buffer t t))
-
-(global-set-key (kbd "C-c r") 'revert-buffer-without-query)
-
-;; C-c . repeats last command
-(global-set-key (kbd "C-c .") 'repeat)
-
 (defun show-file-name ()
   "Show the full path file name in the minibuffer."
   (interactive)
@@ -105,38 +79,56 @@ Including indent-buffer, which should not be called automatically on save."
       (message "Skipping untabify-buffer in go-mode.")
     (untabify-buffer))
   (whitespace-cleanup)
-  (if (eq 'python-mode major-mode)
-      (message "Skipping indent-buffer in python-mode.")
+  (if (or (eq 'python-mode major-mode) (eq 'yaml-mode major-mode))
+      (message "Skipping indent-buffer in %s." major-mode)
     (indent-buffer)))
 
-(global-set-key (kbd "C-c w") 'cleanup-buffer)
+(global-set-key (kbd "C-c c") 'cleanup-buffer)
 
 ;; keybindings for navigating elisp sources
-(define-key 'help-command (kbd "C-l") 'find-library)
-(define-key 'help-command (kbd "C-f") 'find-function)
-(define-key 'help-command (kbd "C-k") 'find-function-on-key)
+(defun call-interactively-other-window (function &optional noselect)
+  "Call FUNCTION interactively. Restore the current window if
+NOSELECT is non-nil."
+  (let ((current-window (selected-window)))
+    (call-interactively function)
+    (when noselect
+      (select-window current-window))))
+
+(define-key 'help-command (kbd "C-f")
+  (lambda ()
+    (interactive)
+    (call-interactively-other-window 'find-function-other-window t)))
+
+(define-key 'help-command (kbd "C-k")
+  (lambda ()
+    (interactive)
+    (call-interactively-other-window 'find-function-on-key t)))
 
 ;; join line
 (global-set-key (kbd "M-j") (lambda () (interactive) (join-line -1)))
 
-;; imenu (will use ido completion if ido-ubiquitous-mode is enabled)
-(global-set-key (kbd "C-c i") 'imenu)
-
-(defun rename-file-and-buffer (new-name)
-  "Renames both current buffer and file it's visiting to NEW-NAME."
-  (interactive "sNew name: ")
+;; source: http://rejeep.github.io/emacs/elisp/2010/03/26/rename-file-and-buffer-in-emacs.html
+(defun rename-this-buffer-and-file ()
+  "Renames current buffer and file it is visiting."
+  (interactive)
   (let ((name (buffer-name))
         (filename (buffer-file-name)))
-    (if (not filename)
-        (message "Buffer '%s' is not visiting a file!" name)
-      (if (get-buffer new-name)
-          (message "A buffer named '%s' already exists!" new-name)
-        (progn
-          (rename-file name new-name 1)
-          (rename-buffer new-name)
-          (set-visited-file-name new-name)
-          (set-buffer-modified-p nil))))))
+    (if (not (and filename (file-exists-p filename)))
+        (error "Buffer '%s' is not visiting a file!" name)
+      (let ((new-name (read-file-name "New name: " filename)))
+        (cond ((get-buffer new-name)
+               (error "A buffer named '%s' already exists!" new-name))
+              (t
+               (rename-file filename new-name 1)
+               (rename-buffer new-name)
+               (set-visited-file-name new-name)
+               (set-buffer-modified-p nil)
+               (message "File '%s' successfully renamed to '%s'" name
+                        (file-name-nondirectory new-name))))))))
 
-(global-set-key (kbd "C-c n") 'rename-file-and-buffer)
+(global-set-key (kbd "C-c n") 'rename-this-buffer-and-file)
+
+;; enable subword-mode in prog-mode
+(add-hook 'prog-mode-hook 'subword-mode)
 
 (provide 'init-editing)
