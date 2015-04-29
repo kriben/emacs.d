@@ -61,7 +61,4 @@
 ;; undo/redo window configuration with C-c <left>/<right>
 (winner-mode 1)
 
-;; confirm when exiting
-(setq confirm-kill-emacs 'y-or-n-p)
-
 (provide 'init-sane-defaults)
