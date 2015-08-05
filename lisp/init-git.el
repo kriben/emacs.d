@@ -1,46 +1,47 @@
 ;; install packages
 (require-packages
- '(magit git-commit-mode git-rebase-mode gitconfig-mode gitignore-mode))
+ '(magit gitconfig-mode gitignore-mode))
 
 (require 'magit)
-(require 'git-commit-mode)
-(require 'git-rebase-mode)
 (require 'gitconfig-mode)
 (require 'gitignore-mode)
+(require 'grep)
 (require 'vc-git)
 
 ;; use appropiate git-mode for .gitconfig and .gitignore extensions
-(add-to-list 'auto-mode-alist '("\\.gitignore\\'" . gitignore-mode))
-(add-to-list 'auto-mode-alist '("\\.gitconfig\\'" . gitconfig-mode))
+(add-to-list 'auto-mode-alist '("gitignore\\'" . gitignore-mode))
+(add-to-list 'auto-mode-alist '("gitconfig\\'" . gitconfig-mode))
 
 ;; magit keybinding
 (global-set-key (kbd "C-x m") 'magit-status)
 
 ;; magit blame keybinding
-(global-set-key (kbd "C-c b") 'magit-blame-mode)
+(global-set-key (kbd "C-c b")
+                (lambda ()
+                  (interactive)
+                  (if magit-blame-mode
+                      (magit-blame-quit)
+                    (call-interactively 'magit-blame))))
 
-;; hide magit instructions
-(setq magit-last-seen-setup-instructions "1.4.0")
-
-(defun magit-visit-item-noselect (&optional other-window)
+(defun magit-diff-visit-file-noselect ()
   "Visit current item, but don't select it."
-  (interactive "P")
+  (interactive)
   (let ((current-window (selected-window)))
-    (magit-visit-item other-window)
+    (call-interactively 'magit-diff-visit-file)
     (select-window current-window)))
 
 (add-hook 'magit-status-mode-hook
           (lambda ()
             ;; make C-o and o behave as in dired
             (define-key magit-status-mode-map (kbd "C-o")
-              'magit-visit-item-noselect)
+              'magit-diff-visit-file-noselect)
             (define-key magit-status-mode-map (kbd "o")
-              'magit-visit-item)))
+              'magit-diff-visit-file)))
 
 (defun git-grep-root ()
   "Run git-grep in the repository root."
   (interactive)
-  (let ((git-root-path (magit-get-top-dir)))
+  (let ((git-root-path (magit-toplevel)))
     (when git-root-path
       (vc-git-grep (grep-read-regexp) "*" git-root-path))))
 
