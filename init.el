@@ -20,6 +20,7 @@
 (require 'init-editing)
 (require 'init-expand-region)
 (require 'init-python-mode)
+(require 'init-web-mode)
 (require 'init-imenu)
 (require 'init-tramp)
 (require 'init-nginx)
