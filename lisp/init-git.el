@@ -23,6 +23,9 @@
                       (magit-blame-quit)
                     (call-interactively 'magit-blame))))
 
+;; disable gravatars
+(setq magit-revision-show-gravatars nil)
+
 (defun magit-diff-visit-file-noselect ()
   "Visit current item, but don't select it."
   (interactive)
@@ -47,6 +50,16 @@
 
 ;; run git grep in the repository root
 (global-set-key (kbd "C-c g") 'git-grep-root)
+
+(defun git-branch-with-prefix ()
+  "Create and checkout <username>/BRANCH from master."
+  (interactive)
+  (let* ((prefix (concat user-login-name "/"))
+         (suffix (magit-read-string-ns (format "Branch name (prefix: %s)" prefix)))
+         (branch (concat prefix suffix)))
+    (magit-run-git "checkout" "-b" branch "master")))
+
+(global-set-key (kbd "C-c w") 'git-branch-with-prefix)
 
 (defun grep-visit-buffer-other-window (&optional event noselect)
   "Visit grep result in another window."
