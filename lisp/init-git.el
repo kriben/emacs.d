@@ -12,6 +12,9 @@
 (add-to-list 'auto-mode-alist '("gitignore\\'" . gitignore-mode))
 (add-to-list 'auto-mode-alist '("gitconfig\\'" . gitconfig-mode))
 
+;; Silence annoying setup instruction warning.
+(setq magit-last-seen-setup-instructions "1.4.0")
+
 ;; magit keybinding
 (global-set-key (kbd "C-x m") 'magit-status)
 
