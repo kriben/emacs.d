@@ -24,6 +24,7 @@
 (require 'init-imenu)
 (require 'init-tramp)
 (require 'init-nginx)
+(require 'init-c-mode)
 
 ;; local settings (optional)
 (require 'init-local nil t)
