@@ -2,6 +2,9 @@
 (require-packages
  '(flx-ido ido-vertical-mode ido-ubiquitous smex))
 
+;; Silence warning about "ido-completing-read got redefined"
+(setq ad-redefinition-action 'accept)
+
 ;; load ido
 (require 'ido)
 (ido-mode 1)
