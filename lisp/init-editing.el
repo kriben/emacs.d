@@ -131,4 +131,9 @@ NOSELECT is non-nil."
 ;; enable subword-mode in prog-mode
 (add-hook 'prog-mode-hook 'subword-mode)
 
+;; 4 spaces indent in java
+(add-hook 'java-mode-hook (lambda ()
+			    (setq c-basic-offset 4)
+			    (setq indent-tabs-mode nil)))
+
 (provide 'init-editing)
