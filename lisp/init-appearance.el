@@ -23,9 +23,9 @@
   (global-hl-line-mode 1))
 
 ;; set theme
-(use-package material-theme
+(use-package color-theme-sanityinc-tomorrow
   :if (display-graphic-p)
-  :config (load-theme 'material t))
+  :config (load-theme 'sanityinc-tomorrow-night t))
 
 ;; highlight matching parentheses
 (use-package paren
