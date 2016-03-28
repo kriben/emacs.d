@@ -1,7 +1,7 @@
 ;; add melpa repo
 (require 'package)
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
+             '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
 (defun require-package (package &optional min-version no-refresh)
@@ -20,10 +20,16 @@ re-downloaded in order to locate PACKAGE."
   "Install a list of PACKAGES."
   (mapcar (lambda (package) (require-package package)) packages))
 
-;; add ~/.emacs.d/site-lisp to load path, if it exists
-;; used for backported code and overriding existing packages
-(let ((site-lisp (expand-file-name "site-lisp" user-emacs-directory)))
-  (when (file-directory-p site-lisp)
-    (add-to-list 'load-path site-lisp)))
+;; install missing packages automatically
+(setq use-package-always-ensure t)
+
+;; install use-package and diminish
+(require-packages '(use-package diminish))
+
+;; speed up loading of use-package and dependencies
+(eval-when-compile
+  (require 'use-package))
+(require 'diminish)
+(require 'bind-key)
 
 (provide 'init-package)

@@ -1,3 +1,6 @@
+;; prevent emacs 25 from automatically initializing package.el
+;; (package-initialize)
+
 ;; add ~/.emacs.d/lisp to load path
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
@@ -13,10 +16,12 @@
 (require 'init-company-mode)
 (require 'init-go-mode)
 (require 'init-yaml-mode)
+(require 'init-flyspell)
 (require 'init-markdown-mode)
 (require 'init-rainbow-delimiters)
 (require 'init-ibuffer)
 (require 'init-git)
+(require 'init-grep)
 (require 'init-lisp)
 (require 'init-editing)
 (require 'init-python-mode)
@@ -25,6 +30,13 @@
 (require 'init-tramp)
 (require 'init-nginx)
 (require 'init-c-mode)
+(require 'init-flycheck)
+(require 'init-browse-kill-ring)
+
+;; save customizations as local (unversioned) settings
+(setq custom-file (expand-file-name
+                   "init-local.el"
+                   (expand-file-name "lisp" user-emacs-directory)))
 
 ;; local settings (optional)
 (require 'init-local nil t)

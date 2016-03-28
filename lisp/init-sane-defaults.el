@@ -20,14 +20,18 @@
 (setq mouse-wheel-progressive-speed nil)
 
 ;; reload buffers automatically when files change on disk
-(global-auto-revert-mode 1)
+(use-package autorevert
+  :ensure nil ;; package is bundled with emacs
+  :diminish auto-revert-mode
+  :config
+  (global-auto-revert-mode 1))
 
 ;; reload dired buffers automatically and be quit about it
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
 
 ;; integrate with X clipboard
-(setq x-select-enable-clipboard t)
+(setq select-enable-clipboard t)
 
 ;; ensure clipboard strings are saved into kill ring
 (setq save-interprogram-paste-before-kill t)
@@ -39,7 +43,6 @@
 (setq echo-keystrokes 0.1)
 
 ;; add directory to buffer name if filename is not unique
-(require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 
 ;; automatically determine major-mode for newly created buffers
@@ -60,5 +63,14 @@
 
 ;; undo/redo window configuration with C-c <left>/<right>
 (winner-mode 1)
+
+;; confirm when exiting
+(setq confirm-kill-emacs 'y-or-n-p)
+
+;; disable backup files
+(setq make-backup-files nil)
+
+;; preserve point position when scrolling
+(setq scroll-preserve-screen-position 'always)
 
 (provide 'init-sane-defaults)

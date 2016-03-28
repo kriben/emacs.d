@@ -1,6 +1,9 @@
 ;; start server for emacsclient
-(require 'server)
-(unless (server-running-p)
-  (server-start))
+(use-package server
+  :ensure nil ;; package is bundled with emacs
+
+  :config
+  (unless (server-running-p)
+    (server-start)))
 
 (provide 'init-server)
