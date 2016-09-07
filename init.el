@@ -30,6 +30,7 @@
 (require 'init-tramp)
 (require 'init-nginx)
 (require 'init-c-mode)
+(require 'init-opencl-mode)
 (require 'init-flycheck)
 (require 'init-browse-kill-ring)
 
