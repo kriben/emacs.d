@@ -42,10 +42,9 @@
   ;; do not update cache automatically on every invocation
   (setq smex-auto-update nil)
 
-  ;; save smex state inside emacs.d
-  (setq smex-save-file (expand-file-name ".smex-items" user-emacs-directory))
-
-  :bind ("M-x" . smex)
+  :bind (("M-x" . smex)
+         ("M-X" . smex-major-mode-commands)
+         ("C-c C-c M-x" . execute-extended-command))
 
   :config
   ;; update cache when emacs has been idle for 60 seconds
