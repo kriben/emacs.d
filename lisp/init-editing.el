@@ -1,4 +1,4 @@
- ;; cut or copy the currrent line if no region is active
+ ;; cut or copy the current line if no region is active
 (use-package whole-line-or-region
   :diminish whole-line-or-region-mode
   :config
@@ -25,7 +25,7 @@
 ;; use sh-mode for various zsh files
 (use-package sh-script
   :ensure nil ;; package is bundled with emacs
-  :mode ("z\\(sh[^/]*\\|login\\|logout\\|profile\\|preztorc\\)\\'" . sh-mode))
+  :mode ("z\\(sh[^/]*\\|login\\|logout\\|profile\\)\\'" . sh-mode))
 
 ;; find function definitions
 (use-package find-func
@@ -35,9 +35,11 @@
          ("C-h C-k" . find-function-on-key)))
 
 (defun show-file-name ()
-  "Show the full path file name in the minibuffer."
+  "Show the full path file name in the minibuffer and add it to the kill ring."
   (interactive)
-  (message buffer-file-name))
+  (when buffer-file-name
+    (message buffer-file-name)
+    (kill-new (file-truename buffer-file-name))))
 
 ;; source:
 ;; http://emacsredux.com/blog/2013/05/04/rename-file-and-buffer/
@@ -84,9 +86,6 @@
 
 ;; C-c f shows the path of the current file
 (global-set-key (kbd "C-c f") 'show-file-name)
-
-;; bind hippie-expand
-(global-set-key (kbd "C-c e") 'hippie-expand)
 
 ;; join line
 (global-set-key (kbd "M-j") (lambda () (interactive) (join-line -1)))

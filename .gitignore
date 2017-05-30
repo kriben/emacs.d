@@ -47,3 +47,15 @@ backups/
 
 # multiple-cursors
 /.mc-lists.el
+
+# network security manager
+/network-security.data
+
+# smex
+/.smex-items
+
+# ido
+/.ido.last
+
+# saveplace
+/places

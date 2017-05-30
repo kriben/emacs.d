@@ -61,9 +61,6 @@
 ;; default to 80 chars fill-column
 (setq-default fill-column 80)
 
-;; undo/redo window configuration with C-c <left>/<right>
-(winner-mode 1)
-
 ;; confirm when exiting
 (setq confirm-kill-emacs 'y-or-n-p)
 
@@ -72,5 +69,14 @@
 
 ;; preserve point position when scrolling
 (setq scroll-preserve-screen-position 'always)
+
+;; always add newline at the end of the file
+(setq require-final-newline t)
+
+;; remember position in previously visited files
+(use-package saveplace
+  :ensure nil ;; package is bundled with emacs
+  :config
+  (save-place-mode 1))
 
 (provide 'init-sane-defaults)
