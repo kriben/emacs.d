@@ -6,7 +6,8 @@
 
   :bind (:map go-mode-map
          ;; C-c p runs gofmt on the buffer
-         ("C-c p" . gofmt))
+         ("C-c p" . gofmt)
+         ("C-c C-c" . comment-region))
 
   :config
   ;; run gofmt before saving file
