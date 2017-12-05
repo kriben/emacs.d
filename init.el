@@ -18,6 +18,7 @@
 (require 'init-projectile)
 (require 'init-server)
 (require 'init-go-mode)
+(require 'init-rust-mode)
 (require 'init-yaml-mode)
 (require 'init-flyspell)
 (require 'init-markdown-mode)
