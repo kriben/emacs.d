@@ -6,9 +6,6 @@
 
 (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
 
-(use-package cargo-minor-mode
-  :init)
-
 (use-package racer
   :init
   (setq racer-cmd "~/.cargo/bin/racer")
