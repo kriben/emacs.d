@@ -54,6 +54,7 @@
    (java-mode . mpolden/eglot-ensure)
    (python-mode . mpolden/eglot-ensure)
    (rust-mode . mpolden/eglot-ensure)
+   (c++-mode . mpolden/eglot-ensure)
    (before-save . mpolden/eglot-before-save))
 
   :bind (:map eglot-mode-map
